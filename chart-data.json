@@ -1,0 +1,17 @@
+// data model for employee ranks/score/events listing //
+
+{
+	"name": "Arun",
+	"dataInfo" :"Monthly Employee details such as Rank,Score and Events",
+	"startDate" : "01-jan-2015",
+	"endDate" : "31-jan-2015",
+	"ranks" : [ {"day":"1","rank":"10"},{"day":"2","rank":"12"},{"day":"3","rank":"16"},{"day":"4","rank":"10"},{"day":"5","rank":"10"}],
+	"scores" : [ {"day":"1","score":"10"},{"day":"2","score":"12"},{"day":"3","score":"16"},{"day":"4","score":"10"},{"day":"5","score":"10"}],
+	"events" : [ {"day":"1","event":"10"},{"day":"2","event":"12"},{"day":"3","event":"16"},{"day":"4","event":"10"},{"day":"5",event:"10"}],
+	"maxRank" : "100",
+	"maxScore" : "100",
+	"maxEvent" : "100" 
+}
+
+
+
