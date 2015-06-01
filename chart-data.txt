@@ -1,0 +1,32 @@
+[
+{
+	"name": "Arun",
+	"dataInfo" :"Monthly Employee details such as Rank,Score and Events",
+	"startDate": "01-jan-2015",
+	"endDate"  : "31-jan-2015",
+	"dayCount" : "30",
+	"ranks"    : [ {"day":"1","rank":"10"},{"day":"2","rank":"12"},{"day":"3","rank":"16"},{"day":"4","rank":"10"},{"day":"5","rank":"10"}],
+	"scores"   : [ {"day":"1","score":"10"},{"day":"2","score":"12"},{"day":"3","score":"16"},{"day":"4","score":"10"},{"day":"5","score":"10"}],
+	"events"   : [ {"day":"1","event":"10"},{"day":"2","event":"12"},{"day":"3","event":"16"},{"day":"4","event":"10"},{"day":"5",event:"10"}],
+	"maxRank"  : "100",
+	"maxScore" : "100",
+	"maxEvent" : "100" 
+}
+,
+
+{
+	"name": "John",
+	"dataInfo" :"Monthly Employee details such as Rank,Score and Events",
+	"startDate": "01-jan-2015",
+	"endDate"  : "31-jan-2015",
+	"dayCount" : "30",
+	"ranks"    : [ {"day":"1","rank":"30"},{"day":"2","rank":"22"},{"day":"3","rank":"46"},{"day":"4","rank":"20"},{"day":"5","rank":"4"}],
+	"scores"   : [ {"day":"1","score":"4"},{"day":"2","score":"5"},{"day":"3","score":"26"},{"day":"4","score":"21"},{"day":"5","score":"32"}],
+	"events"   : [ {"day":"1","event":"23"},{"day":"2","event":"67"},{"day":"3","event":"46"},{"day":"4","event":"40"},{"day":"5",event:"20"}],
+	"maxRank"  : "100",
+	"maxScore" : "100",
+	"maxEvent" : "100" 
+}
+]
+
+

@@ -5,90 +5,68 @@ var userDataColl=[];
 var chartListingDataColl=[];
 var getDayCount=10;
 
+/////
+ 
 
+ function loadData () 
+ {
+
+       var jsonReq = new XMLHttpRequest();
+       jsonReq.overrideMimeType("application/json");
+       jsonReq.open('GET', 'chart-data.json', true);
+
+       jsonReq.onreadystatechange = function () {
+       if (jsonReq.readyState == 4 && jsonReq.status == "200") {
+          
+           getResponse(jsonReq.responseText);
+
+         }
+       }
+       jsonReq.send();
+       
+     }
+
+
+     function getResponse(response){ 
+       var result = JSON.parse(response); 
+        
+	userDataColl=result;
+ 
+var out = "<table width=500px style='border:1px solid black' ><th>Name</th><th>Score</th><th>Rank</th><th>Event</th> <tr> </tr>";
+    var i;
+    for(i = 0; i < result.length; i++) {
+        out += '<tr><td>' + result[i].name + '</td><td>' + getUserTotalScore(result[i])  + '</td><td>' + getUserTotalRank(result[i])+'</td> <td>' + getUserTotalEvent(result[i]) + '</td></tr>'
+    }
+   document.getElementById("grid_div").innerHTML = out;
+
+
+    out += " </table>";
+     }
+
+//////////**********************
+
+
+
+
+
+
+
+
+
+///////////-------------///////////
 
 
 
 
 function getUserData()
 {
-		 // load json data here and parse it into ''userDataColl'' //
-userDataColl=[
-{
-	"name": "Arun",
-	"dataInfo" :"Monthly Employee details such as Rank,Score and Events",
-	"startDate": "01-jan-2015",
-	"endDate"  : "31-jan-2015",
-	"dayCount" : "30",
-	"ranks"    : [ {"day":"1","rank":"10"},{"day":"2","rank":"12"},{"day":"3","rank":"16"},{"day":"4","rank":"10"},{"day":"5","rank":"10"}],
-	"scores"   : [ {"day":"1","score":"10"},{"day":"2","score":"12"},{"day":"3","score":"16"},{"day":"4","score":"10"},{"day":"5","score":"10"}],
-	"events"   : [ {"day":"1","event":"10"},{"day":"2","event":"12"},{"day":"3","event":"16"},{"day":"4","event":"10"},{"day":"5",event:"10"}],
-	"maxRank"  : "100",
-	"maxScore" : "100",
-	"maxEvent" : "100" 
-}
-,
-
-{
-	"name": "John",
-	"dataInfo" :"Monthly Employee details such as Rank,Score and Events",
-	"startDate": "01-jan-2015",
-	"endDate"  : "31-jan-2015",
-	"dayCount" : "30",
-	"ranks"    : [ {"day":"1","rank":"30"},{"day":"2","rank":"22"},{"day":"3","rank":"46"},{"day":"4","rank":"20"},{"day":"5","rank":"4"}],
-	"scores"   : [ {"day":"1","score":"4"},{"day":"2","score":"5"},{"day":"3","score":"26"},{"day":"4","score":"21"},{"day":"5","score":"32"}],
-	"events"   : [ {"day":"1","event":"23"},{"day":"2","event":"67"},{"day":"3","event":"46"},{"day":"4","event":"40"},{"day":"5",event:"20"}],
-	"maxRank"  : "100",
-	"maxScore" : "100",
-	"maxEvent" : "100" 
-},
-{
-	"name": "Nishin",
-	"dataInfo" :"Monthly Employee details such as Rank,Score and Events",
-	"startDate": "01-jan-2015",
-	"endDate"  : "31-jan-2015",
-	"dayCount" : "30",
-	"ranks"    : [ {"day":"1","rank":"17"},{"day":"2","rank":"62"},{"day":"3","rank":"46"},{"day":"4","rank":"90"},{"day":"5","rank":"34"}],
-	"scores"   : [ {"day":"1","score":"4"},{"day":"2","score":"5"},{"day":"3","score":"26"},{"day":"4","score":"21"},{"day":"5","score":"32"}],
-	"events"   : [ {"day":"1","event":"23"},{"day":"2","event":"67"},{"day":"3","event":"46"},{"day":"4","event":"40"},{"day":"5",event:"20"}],
-	"maxRank"  : "100",
-	"maxScore" : "100",
-	"maxEvent" : "100" 
-},
-{
-	"name": "Jayakrishnan",
-	"dataInfo" :"Monthly Employee details such as Rank,Score and Events",
-	"startDate": "01-jan-2015",
-	"endDate"  : "31-jan-2015",
-	"dayCount" : "30",
-	"ranks"    : [ {"day":"1","rank":"60"},{"day":"2","rank":"17"},{"day":"3","rank":"4"},{"day":"4","rank":"40"},{"day":"5","rank":"14"}],
-	"scores"   : [ {"day":"1","score":"4"},{"day":"2","score":"5"},{"day":"3","score":"26"},{"day":"4","score":"21"},{"day":"5","score":"32"}],
-	"events"   : [ {"day":"1","event":"23"},{"day":"2","event":"67"},{"day":"3","event":"46"},{"day":"4","event":"40"},{"day":"5",event:"20"}],
-	"maxRank"  : "100",
-	"maxScore" : "100",
-	"maxEvent" : "100" 
-}
-]; 
+	 
+	// load json data here and parse it into ''userDataColl'' //
+  	loadData();
 
 	 
 }
-
-function createCHartDataByUser(user)
-{ 
-
-	return [];
-}
-
-
-
-
-
-
-function renderChartByType(data,type)
-{
-	 
-	
-}
+ 
 
 // while changing the radio buttons - left side bar //
 function onFilterSelection(filterType)
@@ -97,8 +75,7 @@ function onFilterSelection(filterType)
 	
 
 }
-
-
+ 
 
 // get specific data type for charts //
 function parseChartDataByType(userData,type)
@@ -161,6 +138,39 @@ function parseEventDataByUser(typeData)
 	return dataColl;
 }
 
+function getUserTotalScore(userObj)
+{
+
+	var coll=parseChartDataByType(userObj,'score');
+	var total =0;
+	for (var i = 0; i < coll.length; i++) 
+		{ 
+			total+= parseInt(coll[i]);
+		} 
+	return total;
+}
+function getUserTotalRank(userObj)
+{
+
+	var coll=parseChartDataByType(userObj,'rank');
+	var total =0;
+	for (var i = 0; i < coll.length; i++) 
+		{ 
+			total+= parseInt(coll[i]);
+		} 
+	return total;
+}
+function getUserTotalEvent(userObj)
+{
+
+	var coll=parseChartDataByType(userObj,'event');
+	var total =0;
+	for (var i = 0; i < coll.length; i++) 
+		{ 
+			total+= parseInt(coll[i]);
+		} 
+	return total;
+}
 
 
 function createChartDataCollection(type)

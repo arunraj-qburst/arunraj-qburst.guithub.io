@@ -28,11 +28,13 @@
            <p><input type="button" id="event" onclick="onEventClick()" value="Show Event"></p>
         </div>  
     <div id="chart_div"  style="min-height : 600px; min-width:750px; margin: 0 auto; float:left;"  ></div> 
+
+    <div id="grid_div"  style="min-height : 600px; min-width:750px; margin: 0 auto; float:left;"  ></div> 
   </div> 
 
     This is End of chart
    
-
+ 
 <script type="text/javascript" >
  function initChart()
  {
@@ -126,7 +128,9 @@ var data = new google.visualization.DataTable();
       chart.draw(data, options);
 }
  
-    </script>
+ 
+ 
+    </script>  
 
   </body>
 </html>
