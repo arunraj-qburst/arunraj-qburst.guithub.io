@@ -13,7 +13,6 @@
 	"maxEvent" : "100" 
 }
 ,
-
 {
 	"name": "John",
 	"dataInfo" :"Monthly Employee details such as Rank,Score and Events",
@@ -26,7 +25,31 @@
 	"maxRank"  : "100",
 	"maxScore" : "100",
 	"maxEvent" : "100" 
+},
+{
+	"name": "Nishin",
+	"dataInfo" :"Monthly Employee details such as Rank,Score and Events",
+	"startDate": "01-jan-2015",
+	"endDate"  : "31-jan-2015",
+	"dayCount" : "30",
+	"ranks"    : [ {"day":"1","rank":"17"},{"day":"2","rank":"62"},{"day":"3","rank":"46"},{"day":"4","rank":"90"},{"day":"5","rank":"34"}],
+	"scores"   : [ {"day":"1","score":"4"},{"day":"2","score":"5"},{"day":"3","score":"26"},{"day":"4","score":"21"},{"day":"5","score":"32"}],
+	"events"   : [ {"day":"1","event":"23"},{"day":"2","event":"67"},{"day":"3","event":"46"},{"day":"4","event":"40"},{"day":"5",event:"20"}],
+	"maxRank"  : "100",
+	"maxScore" : "100",
+	"maxEvent" : "100" 
+},
+{
+	"name": "Jayakrishnan",
+	"dataInfo" :"Monthly Employee details such as Rank,Score and Events",
+	"startDate": "01-jan-2015",
+	"endDate"  : "31-jan-2015",
+	"dayCount" : "30",
+	"ranks"    : [ {"day":"1","rank":"60"},{"day":"2","rank":"17"},{"day":"3","rank":"4"},{"day":"4","rank":"40"},{"day":"5","rank":"14"}],
+	"scores"   : [ {"day":"1","score":"4"},{"day":"2","score":"5"},{"day":"3","score":"26"},{"day":"4","score":"21"},{"day":"5","score":"32"}],
+	"events"   : [ {"day":"1","event":"23"},{"day":"2","event":"67"},{"day":"3","event":"46"},{"day":"4","event":"40"},{"day":"5",event:"20"}],
+	"maxRank"  : "100",
+	"maxScore" : "100",
+	"maxEvent" : "100" 
 }
 ]
-
-

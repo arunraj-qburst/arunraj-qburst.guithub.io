@@ -38,41 +38,14 @@
 <script type="text/javascript" >
  function initChart()
  {
-
+ // 
   getUserData();
+
  }
 
-var chart;
-google.load('visualization', '1', {packages: ['corechart', 'line']});
-google.setOnLoadCallback(drawCurveTypes);
-
-function drawCurveTypes() {
-      var data = new google.visualization.DataTable();
-      data.addColumn('number', 'X');
-      data.addColumn('number', 'Dogs');
-      data.addColumn('number', 'Cats');
-      data.addColumn('number', 'Cats2');
-      data.addRows([
-        [0, 0, 0,0],    [1,55,20,31],   [2, 23, 15,41],  [3, 17, 9,22],   [4, 18, 10,54],  [5, 9, 5,36] 
-      ]);
-
-      var options = {
-        hAxis: {
-          title: 'Time'
-        },
-        vAxis: {
-          title: 'Popularity'
-        },
-        series: {
-          1: {curveType: 'function'}
-        }
-      };
-
-      chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-      chart.draw(data, options);
-    }
-  //}
-
+ initLineChartLibs();
+ 
+ 
   function onRankClick() 
   {
 
@@ -91,42 +64,6 @@ function drawCurveTypes() {
 
     drawChartByType('event');
   }
-  // var x = document.getElementById("rank").value;
-   // document.getElementById("demo").innerHTML = x;
-
-function drawChartByType(chartType)
-{
-if(chart)
-  {
-
-    chart.clearChart(); 
-  
-  }
-var data = new google.visualization.DataTable();
-      data.addColumn('number', 'X');
-      for (var i = 0; i < userDataColl.length; i++) {
-        
-        data.addColumn('number', userDataColl[i].name);
-      };
-       
-     // alert("--   "+createChartDataCollection());
-      data.addRows( createChartDataCollection(chartType));
-
-      var options = {
-        hAxis: {
-          title: 'Days'
-        },
-        vAxis: {
-          title:chartType
-        },
-        series: {
-          1: {curveType: 'function'}
-        }
-      };
-
-      // = new google.visualization.LineChart(document.getElementById('chart_div'));
-      chart.draw(data, options);
-}
  
  
  

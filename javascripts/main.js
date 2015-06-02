@@ -4,9 +4,11 @@ var currentUserRawData;
 var userDataColl=[];
 var chartListingDataColl=[];
 var getDayCount=10;
+var isChartLibLoaded=false;
+var currentChartTypeSelected='rank';
 
-/////
  
+// LOADING USER DATA //
 
  function loadData () 
  {
@@ -18,61 +20,143 @@ var getDayCount=10;
        jsonReq.onreadystatechange = function () {
        if (jsonReq.readyState == 4 && jsonReq.status == "200") {
           
-           getResponse(jsonReq.responseText);
+           getUserDataResponse(jsonReq.responseText);
 
          }
        }
        jsonReq.send();
        
-     }
+     } 
 
+function getUserDataResponse(response){ 
+      var result = JSON.parse(response);  
+	userDataColl=result; 
 
-     function getResponse(response){ 
-       var result = JSON.parse(response); 
-        
-	userDataColl=result;
+	showUserListGrid();
+	drawChartByType('rank');
  
-var out = "<table width=500px style='border:1px solid black' ><th>Name</th><th>Score</th><th>Rank</th><th>Event</th> <tr> </tr>";
-    var i;
-    for(i = 0; i < result.length; i++) {
-        out += '<tr><td>' + result[i].name + '</td><td>' + getUserTotalScore(result[i])  + '</td><td>' + getUserTotalRank(result[i])+'</td> <td>' + getUserTotalEvent(result[i]) + '</td></tr>'
-    }
-   document.getElementById("grid_div").innerHTML = out;
-
-
-    out += " </table>";
      }
 
-//////////**********************
+
+
+ // GOOGLE LINE CHART SECTION //
+
+var chart;
+
+function initLineChartLibs()
+{
+	google.load('visualization', '1', {packages: ['corechart', 'line']});
+	google.setOnLoadCallback(onChartLibLoad); 
+} 
+
+function onChartLibLoad()
+{
+  // chart lib loaded successfuly //
+  isChartLibLoaded=true;
+}
+
+  
+function drawChartByType(chartType)
+{
+	if(!isChartLibLoaded)
+	{
+          alert("Chart Library has not yet loaded! \n Try again"); 
+          return;
+	}
+
+	if(chart)
+ 	 { 
+   	 chart.clearChart(); 
+  	}
+	var data = new google.visualization.DataTable();
+      data.addColumn('number', 'X');
+      for (var i = 0; i < userDataColl.length; i++) {
+        
+        if(userDataColl[i].isSelected)
+        data.addColumn('number', userDataColl[i].name);
+      }; 
+
+      data.addRows( createChartDataCollection(chartType));
+
+      var options = {
+        hAxis: {
+          title: 'Days'
+        },
+        vAxis: {
+          title:chartType
+        },
+        series: {
+          1: {curveType: 'function'}
+        }
+      };
+
+      chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+}
+ // END - LINE CHART SECTION //
 
 
 
+// DATAGRID HANDLERS //
+
+function showUserListGrid()
+{ 
+   if(userDataColl && !userDataColl.length)
+	{
+		alert("No User data found");
+		return;
+	}
+   	
+    var out = "<table width=560px   ><th>Name</th><th>Score</th><th>Rank</th><th>Event</th><th>Show</th> ";
+    var i;
+    for(i = 0; i < userDataColl.length; i++) 
+    {
+    	  userDataColl[i].isSelected = true;// this is to show the users in the chart at first time
+        out += '<tr><td>' + userDataColl[i].name + '</td>'+
+        '<td>' + getUserTotalScore(userDataColl[i])  + '</td>'+
+        '<td>' + getUserTotalRank(userDataColl[i])+'</td>'+
+        '<td>' + getUserTotalEvent(userDataColl[i]) + '</td> '+
+        '<td><input type="checkbox" checked="'+userDataColl[i].isSelected + '" name="showInChart" onclick="showUserCheckBoxStatusChange(this,'+i+')" "value="'+i+'"></td></tr>'
+
+    }
+    document.getElementById("grid_div").innerHTML = out; 
+    out += " </table>";
+}
+ 
+function showUserCheckBoxStatusChange(cb,index)
+{
+ 
+	//userDataColl[index].isSelected=true;
+	if(cb.checked)
+	{
+		userDataColl[index].isSelected=true;
+	}
+	else
+	{
+		userDataColl[index].isSelected=false;
+	}
+
+    drawChartByType(currentChartTypeSelected);
+}
+// onchange="showUserCheckBoxStatusChange('+i +', document.getElementById( '+i+' ).select ) 
+
+// END - DATAGRID //
 
 
 
-
-
-
-///////////-------------///////////
-
-
-
+// PARSING USER DATA // 
 
 function getUserData()
-{
-	 
+{ 
 	// load json data here and parse it into ''userDataColl'' //
-  	loadData();
-
-	 
+  	loadData(); 
 }
  
 
 // while changing the radio buttons - left side bar //
 function onFilterSelection(filterType)
 {
-
-	
+ 
 
 }
  
@@ -175,15 +259,21 @@ function getUserTotalEvent(userObj)
 
 function createChartDataCollection(type)
 { 
+	currentChartTypeSelected=type;
 	chartListingDataColl=[];
 	for (var dayCount = 0; dayCount < getDayCount; dayCount++) 
 	{
+
 		var cordnatColl=[dayCount]; 
 		for (var i = 0; i < userDataColl.length; i++) 
 		{ 
-			cordnatColl.push( parseChartDataByType(userDataColl[i],type)[dayCount]); 
+			if(userDataColl[i].isSelected)
+			{
+				cordnatColl.push( parseChartDataByType(userDataColl[i],type)[dayCount]); 
+			}
 		} 
 		chartListingDataColl.push( cordnatColl );
+		 
 	};
 	return chartListingDataColl;
 }

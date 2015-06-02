@@ -39,6 +39,7 @@
 #containerFooter {
   background-color:#bada55;
   min-width: 250px; 
+  
   position:relative;
 }
 
@@ -58,3 +59,7 @@ text-align: center;
   width: 100%;
   height: 100px;
   }
+table, th, td {
+    border: 1px solid black;
+    text-align: center;
+}
