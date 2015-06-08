@@ -80,13 +80,28 @@ function drawChartByType(chartType)
 
       var options = {
         hAxis: {
-          title: 'Days'
+          title: 'Days',
+          textStyle: {
+            color: '#1a237e',
+            fontSize: 24,
+            bold: true
+        },
+         titleTextStyle: {
+            color: '#1a237e',
+            fontSize: 24,
+            bold: true
+          }
+
+
         },
         vAxis: {
           title:chartType
         },
          
-        legend: 'none'
+        legend: 'none',
+        pointSize: 8,
+        pointShape: 'circle',
+         colors: getChartColors(),//['#63A74A','#15A0C8', '#4151A3', '#703593', '#981B48','#E94D20', '#ECA403' ],
       };
 
       chart = new google.visualization.LineChart(document.getElementById('chart_div'));
@@ -105,12 +120,25 @@ function showUserListGrid()
 		alert("No User data found");
 		return;
 	}
-   	
+   
+
+/*
+for (var k in MC.ColorPicker) {
+        if (MC.ColorPicker.hasOwnProperty(k)) {
+       //  alert("Color list"+  MC.ColorPicker[k] );
+        }
+    }
+
+ alert("Color list"+  MC. colorsList );*/
+
+
+
     var out = "<table width=560px   ><th>Name</th><th>Score</th><th>Rank</th><th>Event</th><th>Show</th><th>Color</th> ";
     var i;
     for(i = 0; i < userDataColl.length; i++) 
     {
-    	  userDataColl[i].isSelected = true;// this is to show the users in the chart at first time
+    	userDataColl[i].isSelected = true;// this is to show the users in the chart at first time
+    	userDataColl[i].graphLineColor = MC. colorsList[i];// this is to show the users in the chart at first time
         out += '<tr><td>' + userDataColl[i].name + '</td>'+
         '<td>' + getUserTotalScore(userDataColl[i])  + '</td>'+
         '<td>' + getUserTotalRank(userDataColl[i])+'</td>'+
@@ -118,7 +146,7 @@ function showUserListGrid()
         '<td><input type="checkbox" checked="'+userDataColl[i].isSelected + 
         '" name="showInChart" onclick="showUserCheckBoxStatusChange(this,'+i+')" "value="'+
         i+'"></td><td> '
-        +' <input type="hidden" class="color" value="#110033" > </td></tr>'
+        +' <input type="hidden" id="'+i+'"   class="color" value="#'+userDataColl[i].graphLineColor+'" > </td></tr>'
 
  
 
@@ -285,13 +313,18 @@ function createChartDataCollection(type)
 }
 
 // set line chart colors //
-function setChartColors()
+function getChartColors()
 {
-	var options = 
-	{
-          legend: 'none',
-          colors: ['black', 'blue', 'red', 'green', 'yellow', 'gray']
-      };
+	var options =[] ;
+	 for (var i = 0; i < userDataColl.length; i++) 
+		{ 
+			if(userDataColl[i].isSelected)
+			{
+				options.push(  userDataColl[i].graphLineColor); 
+			}
+		} 
+      
+      return options;
 }
 
 // HANDLE COLOR PICKER CHANGE //
@@ -299,10 +332,16 @@ function OnColorChanged(selectedColor, colorPickerIndex)
 {
   // var divA = document.getElementById("divA");
   //var divB = document.getElementById("divB");
-  if (colorPickerIndex==0) 
-      alert("color change @1"+ selectedColor);
-  else if (colorPickerIndex==1) 
-       alert("color change @2"+ selectedColor);
+  //if (colorPickerIndex==0) 
+  //    alert("color change @1"+ selectedColor);
+ // else if (colorPickerIndex==1) 
+
+ 		var rgb = selectedColor.replace("rgb(", "").replace(")", "");
+ 		var rgbArr=rgb.split(",");
+      // alert("color change @  #"+ rToh(rgbArr[0],rgbArr[1],rgbArr[2]) );
+
+       	userDataColl[colorPickerIndex].graphLineColor=	"#"+ rToh(rgbArr[0],rgbArr[1],rgbArr[2]);
+       	drawChartByType(currentChartTypeSelected);
 }
 
 
@@ -321,10 +360,17 @@ $(document).ready(function(){
 });
 
 
+function rgbToHex(r, g, b) {
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}
 
 
-
-
+function rToh(r,g,b){
+    var bin = r << 16 | g << 8 | b;
+    return (function(h){
+        return new Array(7-h.length).join("0")+h
+    })(bin.toString(16).toUpperCase())
+}
 
 
 
