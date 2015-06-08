@@ -85,9 +85,8 @@ function drawChartByType(chartType)
         vAxis: {
           title:chartType
         },
-        series: {
-          1: {curveType: 'function'}
-        }
+         
+        legend: 'none'
       };
 
       chart = new google.visualization.LineChart(document.getElementById('chart_div'));
@@ -107,7 +106,7 @@ function showUserListGrid()
 		return;
 	}
    	
-    var out = "<table width=560px   ><th>Name</th><th>Score</th><th>Rank</th><th>Event</th><th>Show</th> ";
+    var out = "<table width=560px   ><th>Name</th><th>Score</th><th>Rank</th><th>Event</th><th>Show</th><th>Color</th> ";
     var i;
     for(i = 0; i < userDataColl.length; i++) 
     {
@@ -116,11 +115,18 @@ function showUserListGrid()
         '<td>' + getUserTotalScore(userDataColl[i])  + '</td>'+
         '<td>' + getUserTotalRank(userDataColl[i])+'</td>'+
         '<td>' + getUserTotalEvent(userDataColl[i]) + '</td> '+
-        '<td><input type="checkbox" checked="'+userDataColl[i].isSelected + '" name="showInChart" onclick="showUserCheckBoxStatusChange(this,'+i+')" "value="'+i+'"></td></tr>'
+        '<td><input type="checkbox" checked="'+userDataColl[i].isSelected + 
+        '" name="showInChart" onclick="showUserCheckBoxStatusChange(this,'+i+')" "value="'+
+        i+'"></td><td> '
+        +' <input type="hidden" class="color" value="#110033" > </td></tr>'
+
+ 
 
     }
+     out += " </table>";
+
     document.getElementById("grid_div").innerHTML = out; 
-    out += " </table>";
+   MC.ColorPicker.reload();
 }
  
 function showUserCheckBoxStatusChange(cb,index)
@@ -277,3 +283,49 @@ function createChartDataCollection(type)
 	};
 	return chartListingDataColl;
 }
+
+// set line chart colors //
+function setChartColors()
+{
+	var options = 
+	{
+          legend: 'none',
+          colors: ['black', 'blue', 'red', 'green', 'yellow', 'gray']
+      };
+}
+
+// HANDLE COLOR PICKER CHANGE //
+function OnColorChanged(selectedColor, colorPickerIndex) 
+{
+  // var divA = document.getElementById("divA");
+  //var divB = document.getElementById("divB");
+  if (colorPickerIndex==0) 
+      alert("color change @1"+ selectedColor);
+  else if (colorPickerIndex==1) 
+       alert("color change @2"+ selectedColor);
+}
+
+
+// JQUERY //
+
+
+$(document).ready(function(){
+
+ $('.simple_color_callback').simpleColor({
+    onSelect: function(hex, element) {
+      alert("You selected #" + hex + " for input #" + element.attr('class'));
+    }
+  });
+ $('.simple_color_callback2').simpleColor({ displayColorCode: true });
+
+});
+
+
+
+
+
+
+
+
+
+

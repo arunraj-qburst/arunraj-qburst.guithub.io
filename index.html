@@ -6,14 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="description" content="Chart Data listing">
 
+    <link href="javascripts/colorpicker/mcColorPicker.css"  media="screen" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
+    
 
     <title>Chart Data listing</title>
+    <script src="javascripts/colorpicker/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="javascripts/colorpicker/jquery.simple-color.js" type="text/javascript"></script>
+    <script src="javascripts/colorpicker/mcColorPicker.js" type="text/javascript"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"  ></script>
-    <script type="text/javascript" src="javascripts/main.js">
-     
-    </script>
+    <script type="text/javascript" src="javascripts/main.js">   </script> 
+    
+
+<script type="text/javascript">
+  
+  
+</script>
 
   </head>
 
@@ -22,52 +30,46 @@
     <div id="bannerBar"   class="bannerBarArea">
       This is Header
     </div> 
+        
         <div  style="float:left;">
            <p><input type="button" id="score" onclick="onScoreClick()" value="Show Score"></p>
            <p><input type="button" id="rank" onclick="onRankClick()" value="Show Rank"></p>
-           <p><input type="button" id="event" onclick="onEventClick()" value="Show Event"></p>
+           <p><input type="button" id="event" onclick="onEventClick()" value="Show Event"></p> 
         </div>  
-    <div id="chart_div"  style="min-height : 600px; min-width:750px; margin: 0 auto; float:left;"  ></div> 
 
+    <div id="chart_div"  style="min-height : 600px; min-width:750px; margin: 0 auto; float:left;"  ></div>  
     <div id="grid_div"  style="min-height : 600px; min-width:750px; margin: 0 auto; float:left;"  ></div> 
+
   </div> 
 
-    This is End of chart
-   
+    This is End of chart 
  
 <script type="text/javascript" >
- function initChart()
- {
- // 
-  getUserData();
-
- }
-
- initLineChartLibs();
+  function initChart()
+  {  
+    getUserData();  
+  }
  
+  initLineChartLibs(); 
  
   function onRankClick() 
-  {
-
+  { 
     drawChartByType('rank');
   }
 
   function onScoreClick() 
-  {
-
+  { 
     drawChartByType('score');
-  }
-
+  } 
 
   function onEventClick() 
-  {
-
+  { 
     drawChartByType('event');
-  }
+  } 
  
- 
- 
-    </script>  
+  </script>  
 
-  </body>
+ <input class="simple_color_callback" value="#33cc33"/> 
+ 
+ </body>
 </html>
