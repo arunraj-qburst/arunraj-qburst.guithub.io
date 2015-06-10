@@ -133,7 +133,7 @@ for (var k in MC.ColorPicker) {
 
 
 
-    var out = "<table width=560px   ><th>Name</th><th>Score</th><th>Rank</th><th>Event</th><th>Show</th><th>Color</th> ";
+    var out = "<table id='dataGrid' width='80%'' ><thead><tr><th>Name</th><th>Score</th><th>Rank</th><th>Event</th><th>Show</th><th>Color</th></tr></thead><tbody> ";
     var i;
     for(i = 0; i < userDataColl.length; i++) 
     {
@@ -151,10 +151,22 @@ for (var k in MC.ColorPicker) {
  
 
     }
-     out += " </table>";
-
+     out += " </tbody> </table>"; 
     document.getElementById("grid_div").innerHTML = out; 
-   MC.ColorPicker.reload();
+
+  	
+ 	 
+	$(document).ready(function(){
+
+	 
+	   $('#dataGrid').DataTable({paging: false } );
+	   MC.ColorPicker.reload();
+
+	});
+
+
+
+
 }
  
 function showUserCheckBoxStatusChange(cb,index)
@@ -356,6 +368,7 @@ $(document).ready(function(){
     }
   });
  $('.simple_color_callback2').simpleColor({ displayColorCode: true });
+
 
 });
 
