@@ -12,34 +12,28 @@ var currentChartTypeSelected='rank';
 
  function loadData () 
  {
-
        var jsonReq = new XMLHttpRequest();
        jsonReq.overrideMimeType("application/json");
        jsonReq.open('GET', 'chart-data.json', true);
-
        jsonReq.onreadystatechange = function () {
        if (jsonReq.readyState == 4 && jsonReq.status == "200") {
           
            getUserDataResponse(jsonReq.responseText);
-
          }
        }
-       jsonReq.send();
-       
+       jsonReq.send();       
      } 
 
-function getUserDataResponse(response){ 
+function getUserDataResponse(response)
+{ 
       var result = JSON.parse(response);  
-	userDataColl=result; 
+	  userDataColl=result; 
+	  showUserListGrid();
+	  drawChartByType('rank'); 
+	  initEmployeeController();
+}
 
-	showUserListGrid();
-	drawChartByType('rank');
- 
-     }
-
-
-
- // GOOGLE LINE CHART SECTION //
+// GOOGLE LINE CHART SECTION //
 
 var chart;
 
@@ -54,31 +48,27 @@ function onChartLibLoad()
   // chart lib loaded successfuly //
   isChartLibLoaded=true;
 }
-
   
 function drawChartByType(chartType)
 {
 	if(!isChartLibLoaded)
 	{
-          alert("Chart Library has not yet loaded! \n Try again"); 
-          return;
+        alert("Chart Library has not yet loaded! \n Try again"); 
+        return;
 	}
-
 	if(chart)
- 	 { 
-   	 chart.clearChart(); 
+ 	{ 
+   	   chart.clearChart(); 
   	}
 	var data = new google.visualization.DataTable();
-      data.addColumn('number', 'X');
-      for (var i = 0; i < userDataColl.length; i++) {
-        
-        if(userDataColl[i].isSelected)
-        data.addColumn('number', userDataColl[i].name);
-      }; 
-
-      data.addRows( createChartDataCollection(chartType));
-
-      var options = {
+    data.addColumn('number', 'X');
+    for (var i = 0; i < userDataColl.length; i++) 
+    {
+       if(userDataColl[i].isSelected)
+       data.addColumn('number', userDataColl[i].name);
+    }; 
+    data.addRows( createChartDataCollection(chartType));
+    var options = {
         hAxis: {
           title: 'Days',
           textStyle: {
@@ -86,12 +76,11 @@ function drawChartByType(chartType)
             fontSize: 24,
             bold: true
         },
-         titleTextStyle: {
+        titleTextStyle: {
             color: '#1a237e',
             fontSize: 24,
             bold: true
           }
-
 
         },
         vAxis: {
@@ -101,7 +90,7 @@ function drawChartByType(chartType)
         legend: 'none',
         pointSize: 8,
         pointShape: 'circle',
-         colors: getChartColors(),//['#63A74A','#15A0C8', '#4151A3', '#703593', '#981B48','#E94D20', '#ECA403' ],
+        colors: getChartColors(),//['#63A74A','#15A0C8', '#4151A3', '#703593', '#981B48','#E94D20', '#ECA403' ],
       };
 
       chart = new google.visualization.LineChart(document.getElementById('chart_div'));
@@ -148,30 +137,19 @@ for (var k in MC.ColorPicker) {
         i+'"></td><td> '
         +' <input type="hidden" id="'+i+'"   class="color" value="#'+userDataColl[i].graphLineColor+'" > </td></tr>'
 
- 
-
     }
-     out += " </tbody> </table>"; 
+    out += " </tbody> </table>"; 
     document.getElementById("grid_div").innerHTML = out; 
-
-  	
- 	 
-	$(document).ready(function(){
-
-	 
+	$(document).ready(function()
+	{
 	   $('#dataGrid').DataTable({paging: false } );
 	   MC.ColorPicker.reload();
-
 	});
-
-
-
 
 }
  
 function showUserCheckBoxStatusChange(cb,index)
 {
- 
 	//userDataColl[index].isSelected=true;
 	if(cb.checked)
 	{
@@ -184,7 +162,6 @@ function showUserCheckBoxStatusChange(cb,index)
 
     drawChartByType(currentChartTypeSelected);
 }
-// onchange="showUserCheckBoxStatusChange('+i +', document.getElementById( '+i+' ).select ) 
 
 // END - DATAGRID //
 
@@ -197,7 +174,6 @@ function getUserData()
 	// load json data here and parse it into ''userDataColl'' //
   	loadData(); 
 }
- 
 
 // while changing the radio buttons - left side bar //
 function onFilterSelection(filterType)
@@ -206,7 +182,6 @@ function onFilterSelection(filterType)
 
 }
  
-
 // get specific data type for charts //
 function parseChartDataByType(userData,type)
 { 
@@ -234,7 +209,6 @@ function parseRankDataByUser(typeData)
 			dataColl.push(parseInt(typeData[i].rank)); 
 			else
 			dataColl.push(0);
-
 		} 
 	return dataColl;
 }
@@ -248,7 +222,6 @@ function parseScoreDataByUser(typeData)
 			dataColl.push(parseInt(typeData[i].score)); 
 			else
 			dataColl.push(0);
-
 		} 
 	return dataColl;
 }
@@ -263,7 +236,6 @@ function parseEventDataByUser(typeData)
 			dataColl.push(parseInt(typeData[i].event)); 
 			else
 			dataColl.push(0);
-
 		} 
 	return dataColl;
 }
@@ -309,7 +281,6 @@ function createChartDataCollection(type)
 	chartListingDataColl=[];
 	for (var dayCount = 0; dayCount < getDayCount; dayCount++) 
 	{
-
 		var cordnatColl=[dayCount]; 
 		for (var i = 0; i < userDataColl.length; i++) 
 		{ 
@@ -319,7 +290,6 @@ function createChartDataCollection(type)
 			}
 		} 
 		chartListingDataColl.push( cordnatColl );
-		 
 	};
 	return chartListingDataColl;
 }
@@ -335,7 +305,6 @@ function getChartColors()
 				options.push(  userDataColl[i].graphLineColor); 
 			}
 		} 
-      
       return options;
 }
 
@@ -387,4 +356,23 @@ function rToh(r,g,b){
 
 
 
+// EMPLOYEE CONTROLLER //
+var emplCntrlr ;
+function initEmployeeController()
+{
+	if(!emplCntrlr)
+	emplCntrlr = new EmployeeController(); 
+	if(userDataColl && userDataColl.length)
+	emplCntrlr.setEmployeeData( userDataColl);
+}
 
+function handleAddEmplBtnClick()
+{  
+ 	
+ 	emplCntrlr.addEmployee(emplCntrlr.getNewEmployeeObj('sony' ) );
+ 	
+ 	showUserListGrid();
+	  drawChartByType('rank');  
+}
+
+ 

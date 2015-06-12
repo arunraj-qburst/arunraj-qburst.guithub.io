@@ -11,6 +11,12 @@
     
 
     <title>Chart Data listing</title>
+
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+
     <!-- DataTables CSS -->
     <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
     <!-- jQuery -->
@@ -24,6 +30,7 @@
     <script src="javascripts/colorpicker/jquery.simple-color.js" type="text/javascript"></script>
     <script src="javascripts/colorpicker/mcColorPicker.js" type="text/javascript"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"  ></script>
+    <script type="text/javascript" src="javascripts/EmployeeController.js">   </script> 
     <script type="text/javascript" src="javascripts/main.js">   </script> 
     
 
@@ -44,13 +51,26 @@
            <p><input type="button" id="score" onclick="onScoreClick()" value="Show Score"></p>
            <p><input type="button" id="rank" onclick="onRankClick()" value="Show Rank"></p>
            <p><input type="button" id="event" onclick="onEventClick()" value="Show Event"></p> 
+           <hr style="width:100%;" />
+           
+
+
+ 
         </div>  
 
     <div id="chart_div"  style="min-height : 600px; min-width:750px; margin: 0 auto; float:left;"  ></div>  
-    <div id="grid_div"  style="width:100%; min-height : 600px; min-width:750px; margin: 0 auto; float:left;"  ></div> 
-
+   
+    <div style="width:80%;  margin: 0 auto; float:left;" >
+      <input type="button" id="addEmpl" onclick="handleAddEmplBtnClick()" value="Add new Employees">
+      <div id="grid_div"  style="width:100%; min-height : 600px; min-width:750px; margin: 0 auto; float:left;"  ></div> 
+    </div>
+   
   </div> 
 
+
+<div id="dialog" title="Basic dialog">
+  <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+</div>
     This is End of chart 
  
 <script type="text/javascript" >
