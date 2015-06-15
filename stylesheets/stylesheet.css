@@ -63,3 +63,57 @@ table, th, td {
     border: 1px solid black;
     text-align: center;
 }
+
+
+
+/**   POP UP Styles  Static pop up */
+
+
+
+
+.popup_wrap{
+background-color: rgba(0, 0, 0, 0.61);
+height: 100%;
+position: absolute;
+top: 0;
+width: 100%;
+z-index: 9999;
+left: 0px;
+
+}
+.popup{
+background-color: #ffffff;
+width: 50%;
+border: 3px solid #e8e8e8;        
+margin: 140px auto 0;
+margin-top: 140px;
+border-radius: 5px;
+color: #000;
+border: 5px solid #8E8D8D;
+}
+
+
+/**    Styles - Page 2  */
+
+
+#header {
+    background-color:black;
+    color:white;
+    text-align:center;
+    padding:5px;
+}
+#nav {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:100%;
+    width:10%;
+    float:left;
+    padding:5px;
+}
+#chartContainer{
+    width:80%;
+    height:100%;
+    text-align:center;
+    float:left;
+    padding:10px; 
+}

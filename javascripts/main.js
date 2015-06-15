@@ -122,7 +122,7 @@ for (var k in MC.ColorPicker) {
 
 
 
-    var out = "<table id='dataGrid' width='80%'' ><thead><tr><th>Name</th><th>Score</th><th>Rank</th><th>Event</th><th>Show</th><th>Color</th></tr></thead><tbody> ";
+    var out = "<table id='dataGrid' width='100%'' ><thead><tr><th>Name</th><th>Score</th><th>Rank</th><th>Event</th><th>Show</th><th>Color</th></tr></thead><tbody> ";
     var i;
     for(i = 0; i < userDataColl.length; i++) 
     {
@@ -327,7 +327,7 @@ function OnColorChanged(selectedColor, colorPickerIndex)
 
 
 // JQUERY //
-
+/*
 
 $(document).ready(function(){
 
@@ -340,7 +340,7 @@ $(document).ready(function(){
 
 
 });
-
+*/
 
 function rgbToHex(r, g, b) {
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
