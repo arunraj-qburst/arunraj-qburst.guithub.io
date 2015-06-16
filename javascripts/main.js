@@ -372,7 +372,23 @@ function handleAddEmplBtnClick()
  	emplCntrlr.addEmployee(emplCntrlr.getNewEmployeeObj('sony' ) );
  	
  	showUserListGrid();
-	  drawChartByType('rank');  
+	drawChartByType('rank');  
 }
 
+
+
+// FOR HANDLING THE ADD NEW EMPLOYEE POPUP //
+ $(document).ready(function(){ 
+ 	$('#popup-save-btn').on('click', function() {
+
+ 		//on ajax success
+ 		//$('#dismiss-popup').trigger('click');
  
+		emplCntrlr.addEmployee(emplCntrlr.getNewEmployeeObj( $('#empNameFirst') .val()+" "+$('#empNameLast') .val()) )
+		showUserListGrid();
+		drawChartByType('rank'); 
+ 		$('#dismiss-popup').trigger('click');
+
+ 	});
+
+ });
